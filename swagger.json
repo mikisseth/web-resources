@@ -1,264 +1,260 @@
 {
-"swagger": "2.0",
-"info": {
-"version": "beta",
-"title": "",
-"contact": {
-"name": ""
-},
-"license": {
-"name": "",
-"url": "http://licenseUrl"
-}
-},
-"host": "tool-service.mikis.dpp.tlt.local",
-"basePath": "/",
-"tags": [
-{
-"name": "deploy"
-},
-{
-"name": "list"
-}
-],
-"paths": {
-"/{namespace}/deploy/list": {
-"get": {
-"tags": [
-"deploy"
-],
-"summary": "lists the deployed tools",
-"description": "lists the deployed tools",
-"operationId": "listDeployedTools",
-"parameters": [
-{
-"name": "namespace",
-"in": "path",
-"required": true,
-"type": "string"
-}
-],
-"responses": {
-"200": {
-"description": "successful operation",
-"schema": {
-"type": "array",
-"items": {
-"$ref": "#/definitions/ToolStatus"
-}
-}
-}
-}
-}
-},
-"/{namespace}/deploy/install/{toolName}": {
-"post": {
-"tags": [
-"deploy"
-],
-"summary": "deploys a tool",
-"description": "Will deploy the indicated tool",
-"operationId": "installTool",
-"parameters": [
-{
-"name": "namespace",
-"in": "path",
-"required": true,
-"type": "string"
-},
-{
-"name": "toolName",
-"in": "path",
-"required": true,
-"type": "string"
-},
-{
-"name": "name",
-"in": "query",
-"description": "The name of the tool to deploy",
-"required": false,
-"type": "string"
-}
-],
-"responses": {
-"200": {
-"description": "successful operation",
-"schema": {
-"$ref": "#/definitions/ActionAnyContent"
-}
-}
-}
-}
-},
-"/{namespace}/deploy/delete/{toolName}": {
-"delete": {
-"tags": [
-"deploy"
-],
-"summary": "deploys a tool",
-"description": "Will delete the indicated tool",
-"operationId": "deleteTool",
-"parameters": [
-{
-"name": "namespace",
-"in": "path",
-"required": true,
-"type": "string"
-},
-{
-"name": "toolName",
-"in": "path",
-"required": true,
-"type": "string"
-},
-{
-"name": "name",
-"in": "query",
-"description": "The name of the tool to deploy",
-"required": false,
-"type": "string"
-}
-],
-"responses": {
-"200": {
-"description": "successful operation",
-"schema": {
-"$ref": "#/definitions/ActionAnyContent"
-}
-}
-}
-}
-},
-"/list": {
-"get": {
-"tags": [
-"list"
-],
-"summary": "get list of Tools",
-"description": "Returns list of all Tools that are available for deployment",
-"operationId": "availableTools",
-"parameters": [
-{
-"name": "onlyDeployed",
-"in": "query",
-"description": "Should only deployed tools be returned",
-"required": false,
-"type": "boolean"
-}
-],
-"responses": {
-"200": {
-"description": "successful operation",
-"schema": {
-"type": "array",
-"items": {
-"$ref": "#/definitions/Tool"
-}
-}
-}
-}
-}
-}
-},
-"definitions": {
-"AppStatus": {
-"type": "object",
-"required": [
-"app",
-"deploymentStatuses",
-"status"
-],
-"properties": {
-"app": {
-"type": "string"
-},
-"status": {
-"type": "string"
-},
-"deploymentStatuses": {
-"type": "array",
-"items": {
-"$ref": "#/definitions/DeploymentStatus"
-}
-}
-},
-"description": "Describes an app that can be deployed into a namespace. An app corresponds to a single application that can be composed of multiple components, but might not be considered an end user tool itself."
-},
-"DeploymentStatus": {
-"type": "object",
-"required": [
-"component"
-],
-"properties": {
-"component": {
-"type": "string"
-},
-"status": {
-"type": "string",
-"position": 2,
-"description": "Indicated the state of the deployment, which is an aggregation of the composing apps states",
-"enum": [
-"Running",
-"Starting",
-"Failing"
-]
-}
-},
-"description": "Describes an single deployment as seen from a Kubernetes perspective. Deployments are composed into apps"
-},
-"ToolStatus": {
-"type": "object",
-"properties": {
-"tool": {
-"type": "string",
-"position": 1,
-"description": "The name of this tool, corresponding to the chart name"
-},
-"status": {
-"type": "string",
-"position": 2,
-"description": "Indicated the state of the deployed tool, which is a naggregation of the composing apps states",
-"enum": [
-"Running",
-"Starting",
-"Failing",
-"Partly failing"
-]
-},
-"appStatuses": {
-"type": "array",
-"position": 3,
-"description": "List of the statuses for the apps making up the tool",
-"items": {
-"$ref": "#/definitions/AppStatus"
-}
-}
-},
-"description": "Describes a tool that can be deployed to a project. A deployed tool to corresponds to a Helm release with zero or more chart dependencies."
-},
-"Action": {
-"type": "object"
-},
-"ActionAnyContent": {
-"type": "object"
-},
-"Tool": {
-"type": "object",
-"required": [
-"name"
-],
-"properties": {
-"name": {
-"type": "string"
-},
-"image": {
-"type": "string"
-},
-"description": {
-"type": "string"
-}
-},
-"description": "Describes a tool that can be deployed to a project"
-}
-}
+  "swagger": "2.0",
+  "info": {
+    "version": "beta",
+    "title": "",
+    "contact": {
+      "name": ""
+    },
+    "license": {
+      "name": "",
+      "url": "http://licenseUrl"
+    }
+  },
+  "host": "localhost:9000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "deploy"
+    },
+    {
+      "name": "list"
+    }
+  ],
+  "paths": {
+    "/{namespace}/deploy/list": {
+      "get": {
+        "tags": [
+          "deploy"
+        ],
+        "summary": "lists the deployed tools",
+        "description": "lists the deployed tools",
+        "operationId": "listDeployedTools",
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ToolStatus"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{namespace}/deploy/install/{toolName}": {
+      "post": {
+        "tags": [
+          "deploy"
+        ],
+        "summary": "deploys a tool",
+        "description": "Will deploy the indicated tool",
+        "operationId": "installTool",
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "toolName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "The name of the tool to deploy",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ActionAnyContent"
+            }
+          }
+        }
+      }
+    },
+    "/{namespace}/deploy/delete/{toolName}": {
+      "delete": {
+        "tags": [
+          "deploy"
+        ],
+        "summary": "deploys a tool",
+        "description": "Will delete the indicated tool",
+        "operationId": "deleteTool",
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "toolName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "The name of the tool to deploy",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ActionAnyContent"
+            }
+          }
+        }
+      }
+    },
+    "/list": {
+      "get": {
+        "tags": [
+          "list"
+        ],
+        "summary": "get list of Tools",
+        "description": "Returns list of all Tools that are available for deployment",
+        "operationId": "availableTools",
+        "parameters": [
+          {
+            "name": "onlyDeployed",
+            "in": "query",
+            "description": "Should only deployed tools be returned",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Tool"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AppStatus": {
+      "type": "object",
+      "required": [
+        "app",
+        "deploymentStatuses",
+        "status"
+      ],
+      "properties": {
+        "app": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "deploymentStatuses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeploymentStatus"
+          }
+        }
+      },
+      "description": "Describes an app that can be deployed into a namespace. An app corresponds to a single application that can be composed of multiple components, but might not be considered an end user tool itself."
+    },
+    "DeploymentStatus": {
+      "type": "object",
+      "required": [
+        "component"
+      ],
+      "properties": {
+        "component": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "description": "Indicated the state of the deployment, which is an aggregation of the composing apps states",
+          "enum": [
+            "Running",
+            "Starting",
+            "Failing"
+          ]
+        }
+      },
+      "description": "Describes an single deployment as seen from a Kubernetes perspective. Deployments are composed into apps"
+    },
+    "ToolStatus": {
+      "type": "object",
+      "properties": {
+        "tool": {
+          "type": "string",
+          "description": "The name of this tool, corresponding to the chart name"
+        },
+        "status": {
+          "type": "string",
+          "description": "Indicated the state of the deployed tool, which is a naggregation of the composing apps states",
+          "enum": [
+            "Running",
+            "Starting",
+            "Failing",
+            "Partly failing"
+          ]
+        },
+        "appStatuses": {
+          "type": "array",
+          "description": "List of the statuses for the apps making up the tool",
+          "items": {
+            "$ref": "#/definitions/AppStatus"
+          }
+        }
+      },
+      "description": "Describes a tool that can be deployed to a project. A deployed tool to corresponds to a Helm release with zero or more chart dependencies."
+    },
+    "Action": {
+      "type": "object"
+    },
+    "ActionAnyContent": {
+      "type": "object"
+    },
+    "Tool": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "description": "Describes a tool that can be deployed to a project"
+    }
+  }
 }
